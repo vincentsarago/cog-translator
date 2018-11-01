@@ -1,7 +1,7 @@
 cog_translator
 ==============
-``
-[ecs-watchbot-fargate`](https://github.com/vincentsarago/ecs-watchbot-fargate) example to create a simple/self-managed processing pipeline using ECS Fargate.
+
+[`ecs-watchbot-fargate`](https://github.com/vincentsarago/ecs-watchbot-fargate) example to create a simple/self-managed processing pipeline using ECS Fargate.
 
 `ecs-watchbot-fargate` is based on `@mapbox/ecs-watchbot`, please refer to https://github.com/mapbox/ecs-watchbot for more information
 
