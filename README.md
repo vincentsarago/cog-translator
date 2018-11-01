@@ -59,7 +59,7 @@ We first need to get the SNS topic for our cog-translate-production stack
 $ aws cloudformation describe-stacks --stack-name cog-translator-production | jq -r '.Stacks[0].Outputs[] | select(.OutputKey == "SnsTopic") | .OutputValue'
 
 arn:aws:sns:{REGION}:{MY-AWS-ACCOUNT-ID}:cog-translator-production-WatchbotTopic-{STACK-VERSION}
-``
+```
 
 
 ```bash
