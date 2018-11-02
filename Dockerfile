@@ -23,7 +23,6 @@ RUN ln -s /app/node_modules/watchbot-fargate/bin/watchbot.js /usr/bin/watchbot
 ################################################################################
 # Install Python dependencies
 COPY cog_translator /tmp/app/cog_translator
-COPY README.rst /tmp/app/README.rst
 COPY setup.py /tmp/app/setup.py
 
 RUN pip3 install /tmp/app/ --no-binary numpy -U
