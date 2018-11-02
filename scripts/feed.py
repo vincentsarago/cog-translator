@@ -69,14 +69,18 @@ def main(url, profile, bidx, bucket, key, region, topic):
     """Send message."""
     session = boto3_session(region_name=region)
     sns = session.client("sns")
-    message = json.dumps(dict(
+
+    message = dict(
         url=url,
         bucket=bucket,
         key=key,
         profile=profile,
-        bidx=bidx,
-    ))
-    response = sns.publish(TargetArn=topic, Message=message)
+    )
+
+    if bidx:
+        message["bidx"] = bidx
+
+    response = sns.publish(TargetArn=topic, Message=json.dumps(message))
     return response["MessageId"]
 
 

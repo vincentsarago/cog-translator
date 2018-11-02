@@ -16,7 +16,8 @@ def main():
     """Load message and start process."""
     try:
         message = json.loads(os.environ["Message"])
-        logger.info(f"Processing message {os.environ['Message']}")
+        logger.info(message["Message"])
+        message = json.loads(message["Message"])
         url = message["url"]
         bucket = message["bucket"]
         key = message["key"]
@@ -30,11 +31,10 @@ def main():
         process(url, bucket, key, **options)
 
     except Exception as err:
-        logger.error(err.message)
+        logger.error(err)
         sys.exit(3)
 
     else:
-        logger.info(message)
         sys.exit(0)
 
 

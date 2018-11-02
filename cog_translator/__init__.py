@@ -77,14 +77,10 @@ def process(url, s3_bucket, s3_key, profile="ycbcr", bidx=None):
     else:
         raise Exception(f"Unsuported scheme {url_info.scheme}")
 
-    # TODO: unzip/untar
-
     bname = os.path.basename(src_path)
     ext = bname.split(".")[-1]
-    dst_path = bname.replace(f".{ext}", f"_cog.tif")
-
-    output = _translate(src_path, dst_path, profile=profile, bidx=bidx)
-
-    _upload(output, s3_bucket, s3_key)
+    dst_path = "/tmp/" + bname.replace(f".{ext}", f"_cog.tif")
+    _translate(src_path, dst_path, profile=profile, bidx=bidx)
+    _upload(dst_path, s3_bucket, s3_key)
 
     return True
