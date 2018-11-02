@@ -1,0 +1,10 @@
+{
+    "name": "cog_translator",
+    "version": "1.0.0",
+    "description": "",
+    "devDependencies": {
+        "@mapbox/cloudfriend": "^1.9.1",
+        "watchbot-fargate": "git+https://github.com/vincentsarago/ecs-watchbot-fargate.git#master"
+    },
+    "author": ""
+}
