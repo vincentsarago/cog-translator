@@ -80,6 +80,7 @@ const stack = watchbot.template({
       ]
     }
   ],
+  publicIp: 'ENABLED',
   subnets: cf.ref('ClusterSubnets')
 })
 // We add SNSTopic in the outputs (ref: https://github.com/mapbox/ecs-watchbot/issues/271)
