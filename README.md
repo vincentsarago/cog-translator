@@ -39,10 +39,10 @@ Install and Deploy
   ? AlarmEmail. Email address: contact@remotepixel.ca
   ? Bucket. Bucket to grant stack PUT access to: remotepixel-pub
   ? Cluster. Cluster name or ARN: fargate-cluster
-  ? CpuAllocation. CPU allocation: 256
+  ? CpuAllocation. CPU allocation: 2048
   ? ErrorThreshold. Error threshold for alert: 10
   ? ImageVersion: 1.0.0
-  ? MemoryAllocation. Memory allocation (Mb): 2048
+  ? MemoryAllocation. Memory allocation (Mb): 12288
   ? minSize. Minimum workers size.: 0
   ? maxSize. Maximum worker size: 10
   ```

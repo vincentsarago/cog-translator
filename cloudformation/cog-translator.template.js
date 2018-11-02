@@ -23,7 +23,7 @@ const params = {
     CpuAllocation: {
       Description: 'CPU allocation',
       Type: 'Number',
-      Default: 256
+      Default: 2048
     },
     ErrorThreshold: {
       Type: 'Number',
@@ -37,7 +37,7 @@ const params = {
     MemoryAllocation: {
       Description: 'Memory allocation (Mb)',
       Type: 'Number',
-      Default: 2048
+      Default: 12288
     },
     minSize: {
       Type: 'Number',
