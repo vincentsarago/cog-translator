@@ -25,13 +25,13 @@ clean:
 	docker stop cog
 	docker rm cog
 
+REGION = us-east-1
+SERVICE = cog-translator
+VERSION = 1.0.0
 push:
-	region=us-east-1
-	service=cog-translator
-	version=1.0.0
-	eval $(aws ecr get-login --no-include-email)
-	aws ecr describe-repositories --region ${region} --repository-names ${service} > /dev/null 2>&1 || \
-		aws ecr create-repository --region ${region} --repository-name ${service} > /dev/null
+	eval `aws ecr get-login --no-include-email`
+	aws ecr describe-repositories --region ${REGION} --repository-names ${SERVICE} > /dev/null 2>&1 || \
+		aws ecr create-repository --region ${REGION} --repository-name ${SERVICE} > /dev/null
 	docker build --tag cog-translator:master .
-	docker tag cog-translator:master "${AWS_ACCOUNT_ID}.dkr.ecr.${region}.amazonaws.com/${service}:${version}"
-	docker push "${AWS_ACCOUNT_ID}.dkr.ecr.${region}.amazonaws.com/${service}:${version}"
+	docker tag cog-translator:master "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${SERVICE}:${VERSION}"
+	docker push "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${SERVICE}:${VERSION}"
