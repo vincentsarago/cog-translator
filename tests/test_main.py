@@ -5,7 +5,7 @@ import os
 from click.testing import CliRunner
 
 import rasterio
-from cog_translator import _translate
+from cog_translator import _translate, _get_overview_level
 
 raster_path_rgb = os.path.join(os.path.dirname(__file__), "fixtures", "image_rgb.tif")
 
@@ -25,5 +25,11 @@ def test_translate_valid():
             assert src.compression.value == "JPEG"
             assert src.photometric.value == "YCbCr"
             assert src.interleaving.value == "PIXEL"
-            assert src.overviews(1) == [2, 4, 8, 16, 32, 64]
+            # File is too small to have overviews
+            assert not src.overviews(1)
             assert src.tags()["OVR_RESAMPLING_ALG"] == "BILINEAR"
+
+
+def test_ovrlevel_valid():
+    """Should work as expected (find overview level)."""
+    assert _get_overview_level(raster_path_rgb, 128) == 2

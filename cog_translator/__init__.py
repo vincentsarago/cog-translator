@@ -7,6 +7,7 @@ import wget
 
 from boto3.session import Session as boto3_session
 
+import rasterio
 from rio_cogeo.cogeo import cog_translate
 from rio_cogeo.profiles import cog_profiles
 
@@ -37,6 +38,18 @@ def _upload(path, bucket, key):
     return True
 
 
+def _get_overview_level(src_path, minsize):
+    with rasterio.open(src_path) as src:
+        width = src.width
+        height = src.height
+    nlevel = 0
+    overview = 1
+    while (min(width // overview, height // overview) > minsize):
+        overview *= 2
+        nlevel += 1
+    return nlevel
+
+
 def _translate(src_path, dst_path, profile="ycbcr", bidx=None):
     """Convert image to COG."""
     output_profile = cog_profiles.get(profile)
@@ -50,6 +63,7 @@ def _translate(src_path, dst_path, profile="ycbcr", bidx=None):
         GDAL_TIFF_OVR_BLOCKSIZE=block_size,
     )
 
+    ovr_level = _get_overview_level(src_path, block_size)
     cog_translate(
         src_path,
         dst_path,
@@ -57,7 +71,7 @@ def _translate(src_path, dst_path, profile="ycbcr", bidx=None):
         bidx,
         None,
         None,
-        6,
+        ovr_level,
         "bilinear",
         config,
     )
