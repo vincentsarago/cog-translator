@@ -27,7 +27,7 @@ clean:
 
 REGION = us-east-1
 SERVICE = cog-translator
-VERSION = 1.0.0
+VERSION = 1.1.0
 push:
 	eval `aws ecr get-login --no-include-email`
 	aws ecr describe-repositories --region ${REGION} --repository-names ${SERVICE} > /dev/null 2>&1 || \

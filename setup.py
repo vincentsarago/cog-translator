@@ -11,7 +11,7 @@ with open("cog_translator/__init__.py") as f:
             break
 
 # Runtime requirements.
-inst_reqs = ["click", "rasterio[s3]", "rio-cogeo", "wget"]
+inst_reqs = ["click", "rasterio[s3]", "rio-cogeo==1.0b0", "wget"]
 
 extra_reqs = {"test": ["pytest", "pytest-cov", "mock"]}
 

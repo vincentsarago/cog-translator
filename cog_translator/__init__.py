@@ -13,7 +13,7 @@ from rio_cogeo.profiles import cog_profiles
 
 REGION_NAME = os.environ.get("AWS_REGION", "us-east-1")
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 def _s3_download(path, key):
@@ -38,44 +38,31 @@ def _upload(path, bucket, key):
     return True
 
 
-def _get_overview_level(src_path, minsize):
-    with rasterio.open(src_path) as src:
-        width = src.width
-        height = src.height
-    nlevel = 0
-    overview = 1
-    while (min(width // overview, height // overview) > minsize):
-        overview *= 2
-        nlevel += 1
-    return nlevel
-
-
-def _translate(src_path, dst_path, profile="ycbcr", bidx=None):
+def _translate(src_path, dst_path, profile="jpeg", bidx=None):
     """Convert image to COG."""
     output_profile = cog_profiles.get(profile)
     output_profile.update(dict(BIGTIFF="IF_SAFER"))
 
-    block_size = min(output_profile["blockxsize"], output_profile["blockysize"])
-
+    output_profile.update({"blockxsize": 256, "blockysize": 256})
+    
     config = dict(
         NUM_THREADS=4,
         GDAL_TIFF_INTERNAL_MASK=True,
-        GDAL_TIFF_OVR_BLOCKSIZE=block_size,
+        GDAL_TIFF_OVR_BLOCKSIZE=128,
     )
 
-    ovr_level = _get_overview_level(src_path, block_size)
     cog_translate(
         src_path,
         dst_path,
         output_profile,
-        bidx,
-        None,
-        None,
-        ovr_level,
-        "bilinear",
-        config,
+        indexes=bidx,
+        nodata=None,
+        add_mask=True,
+        overview_level=None,
+        overview_resampling="nearest",
+        config=config,
+        quiet=True
     )
-
     return dst_path
 
 

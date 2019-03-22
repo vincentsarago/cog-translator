@@ -37,8 +37,8 @@ class CustomType:
 @click.option(
     "--profile",
     type=click.Choice(cog_profiles.keys()),
-    default="ycbcr",
-    help="CloudOptimized GeoTIFF profile (default: ycbcr)",
+    default="jpeg",
+    help="CloudOptimized GeoTIFF profile (default: jpeg)",
 )
 @click.option("--bidx", "-b", type=CustomType.bidx, help="Band index to copy")
 @click.option(
